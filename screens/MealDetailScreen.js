@@ -4,11 +4,25 @@ import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import IconButton from "../components/IconButton";
+import { useEffect, useLayoutEffect } from "react";
 
-function MealDetailScreen({route}) {
+function MealDetailScreen({route, navigation}) {
 
     const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+    function headerButtonPressHandler () {
+        console.log('Pressed!');
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                return <IconButton icon="star" color="white" onPress={headerButtonPressHandler}/>
+            }
+        })
+    }, [navigation, headerButtonPressHandler])
 
     return (
         <ScrollView style={styles.rootContainer}>
