@@ -8,7 +8,7 @@ import List from "../components/MealDetail/List";
 function MealDetailScreen({route}) {
 
     const mealId = route.params.mealId;
-    const selectedMeal = MEALS.find((meal) => mealId === mealId);
+    const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
     return (
         <ScrollView style={styles.rootContainer}>
@@ -17,6 +17,7 @@ function MealDetailScreen({route}) {
                 source={{uri: selectedMeal.imageUrl}} 
             />
             <Text style={styles.title} >{selectedMeal.title}</Text>
+            
             <MealDetails 
                 duration={selectedMeal.duration}
                 complexity={selectedMeal.complexity}
