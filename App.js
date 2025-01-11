@@ -87,7 +87,7 @@ export default function App() {
             name="Drawer" 
             component={DrawerNavigator} 
             options={{
-              title: 'All Categories',
+              title: 'Back',
               headerShown: false,
     
             }}
