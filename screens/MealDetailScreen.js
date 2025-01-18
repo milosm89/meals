@@ -5,24 +5,36 @@ import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import IconButton from "../components/IconButton";
-import { useEffect, useLayoutEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
+import { FavoritesContext } from "../store/context/favorites-context";
 
 function MealDetailScreen({route, navigation}) {
 
+    const favoriteMealsCtx = useContext(FavoritesContext)
     const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-    function headerButtonPressHandler () {
-        console.log('Pressed!');
+    const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
+
+    function changeFavoritestatusHandler () {
+        if(mealIsFavorite) {
+            favoriteMealsCtx.removeFavorite(mealId);
+        }
+        else{
+            favoriteMealsCtx.addFavorite(mealId);
+        }
     }
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => {
-                return <IconButton icon="star" color="white" onPress={headerButtonPressHandler}/>
+                return <IconButton 
+                icon= {mealIsFavorite ? "star" : "star-outline"} 
+                color="white" 
+                onPress={changeFavoritestatusHandler}/>
             }
-        })
-    }, [navigation, headerButtonPressHandler])
+        });
+    }, [navigation, changeFavoritestatusHandler])
 
     return (
         <ScrollView style={styles.rootContainer}>
